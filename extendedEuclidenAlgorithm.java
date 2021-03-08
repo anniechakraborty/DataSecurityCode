@@ -27,11 +27,17 @@ class ExtendedEuclidenAlgorithm {
     }
 
     protected int multiplicativeInverse(int r1, int r2) {
-        int gcd = calcGCD(r1, r2);
-        if (t < 0) {
-            t = r1 + t;
+        int t1 = 0, t2 = 1, q = 0, r = 0;
+        while (r2 > 0) {
+            q = r1 / r2;
+            r = r1 - q * r2;
+            r1 = r2;
+            r2 = r;
+            t = t1 - q * t2;
+            t1 = t2;
+            t2 = t;
         }
-        // System.out.println("GCD : " + gcd);
+        t = t1;
         return t;
     }
 

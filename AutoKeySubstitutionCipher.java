@@ -1,10 +1,10 @@
 import java.util.*;
 
 public class AutoKeySubstitutionCipher {
-    private char arr[] = new char[26];
+    protected char arr[] = new char[26];
     private int keys[];
 
-    private void initNumericEquivalent() {
+    protected void initNumericEquivalent() {
         int j = 65;
         for (int i = 0; i < arr.length; i++) {
             arr[i] = (char) j;
@@ -12,11 +12,11 @@ public class AutoKeySubstitutionCipher {
         }
     }
 
-    private char getChar(int pos) {
+    protected char getChar(int pos) {
         return arr[pos];
     }
 
-    private int getPos(char ch) {
+    protected int getPos(char ch) {
         int result = -1;
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] == ch) {

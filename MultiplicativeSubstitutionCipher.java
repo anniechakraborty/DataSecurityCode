@@ -10,24 +10,40 @@ public class MultiplicativeSubstitutionCipher {
     }
 
     private void encryption(String plainText, int key) {
+        AutoKeySubstitutionCipher ob = new AutoKeySubstitutionCipher();
+        ob.initNumericEquivalent();
+        plainText = plainText.toUpperCase();
         String cipher = "";
         for (int i = 0; i < plainText.length(); i++) {
-            int plaChar = plainText.charAt(i) - '0';
+            // System.out.print(plainText.charAt(i));
+            int plaChar = ob.getPos(plainText.charAt(i));
+            // System.out.print("\t" + plaChar);
             int cipChar = (plaChar * key) % 26;
-            cipher += (char) cipChar;
+            // System.out.print("\t" + cipChar);
+            cipher += ob.getChar(cipChar);
+            // System.out.print("\t" + cipher);
+            // System.out.println();
         }
         System.out.println("The Cipher : " + cipher);
     }
 
     private void decryption(String cipher, int key) {
+        AutoKeySubstitutionCipher ob = new AutoKeySubstitutionCipher();
+        ob.initNumericEquivalent();
         String plain = "";
         // Finding the multiplicative inverse of the key
         ExtendedEuclidenAlgorithm obj = new ExtendedEuclidenAlgorithm();
         int keyInverse = obj.multiplicativeInverse(key, 26);
+        System.out.println("The multiplicative inverse of " + key + " is : " + keyInverse);
         for (int i = 0; i < cipher.length(); i++) {
-            int cipChar = cipher.charAt(i) - '0';
+            System.out.print(cipher.charAt(i));
+            int cipChar = ob.getPos(cipher.charAt(i));
+            System.out.print("\t" + cipChar);
             int plaChar = (cipChar * keyInverse) % 26;
-            plain += (char) plaChar;
+            System.out.print("\t" + plaChar);
+            plain += ob.getChar(plaChar);
+            System.out.print("\t" + plain);
+            System.out.println();
         }
         System.out.println("The Plain Text : " + plain);
     }
