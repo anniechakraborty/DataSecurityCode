@@ -1,32 +1,12 @@
 import java.util.*;
 
-public class MultiplicativeSubstitutionCipher {
+public class AdditiveCipher {
     private void menu() {
         System.out.println("----------Menu----------");
         System.out.println("Press 0 to exit. ");
         System.out.println("Press 1 to perform encryption. ");
         System.out.println("Press 2 to perform decryption. ");
         System.out.println("Enter choice : ");
-    }
-
-    protected int multiplicativeInverse(int r1, int r2) {
-        int t1 = 0, t2 = 1, q = 0, r = 0, t;
-        int zn = r1;
-        while (r2 > 0) {
-            q = r1 / r2;
-            r = r1 - q * r2;
-            r1 = r2;
-            r2 = r;
-            t = t1 - q * t2;
-            t1 = t2;
-            t2 = t;
-        }
-        if (r1 == 1) {
-            t = t1 > 0 ? t1 : zn + t1;
-            return t;
-        } else {
-            return -999;
-        }
     }
 
     private void encryption(String plainText, int key) {
@@ -39,7 +19,7 @@ public class MultiplicativeSubstitutionCipher {
             System.out.print(plainText.charAt(i));
             int plaChar = ob.getPos(plainText.charAt(i));
             System.out.print("\t" + plaChar);
-            int cipChar = (plaChar * key) % 26;
+            int cipChar = (plaChar + key) % 26;
             System.out.print("\t" + cipChar);
             cipher += ob.getChar(cipChar);
             System.out.print("\t" + cipher);
@@ -50,20 +30,16 @@ public class MultiplicativeSubstitutionCipher {
 
     private void decryption(String cipher, int key) {
         AutoKeySubstitutionCipher ob = new AutoKeySubstitutionCipher();
-        MultiplicativeSubstitutionCipher obj = new MultiplicativeSubstitutionCipher();
         ob.initNumericEquivalent();
         String plain = "";
-
-        // Finding the multiplicative inverse of the key
-        int keyInverse = obj.multiplicativeInverse(26, key);
-
-        System.out.println("The multiplicative inverse of " + key + " is : " + keyInverse);
         System.out.println("CT char\tNE\tPT NE\tPT char");
         for (int i = 0; i < cipher.length(); i++) {
             System.out.print(cipher.charAt(i));
             int cipChar = ob.getPos(cipher.charAt(i));
             System.out.print("\t" + cipChar);
-            int plaChar = (cipChar * keyInverse) % 26;
+            int temp = (cipChar - key);
+            temp = temp < 0 ? 26 + temp : temp;
+            int plaChar = temp % 26;
             System.out.print("\t" + plaChar);
             plain += ob.getChar(plaChar);
             System.out.print("\t" + plain);
@@ -74,8 +50,8 @@ public class MultiplicativeSubstitutionCipher {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        MultiplicativeSubstitutionCipher MC = new MultiplicativeSubstitutionCipher();
-        MC.menu();
+        AdditiveCipher obj = new AdditiveCipher();
+        obj.menu();
         int choice = sc.nextInt(), key;
         sc.nextLine();
         switch (choice) {
@@ -86,14 +62,14 @@ public class MultiplicativeSubstitutionCipher {
             String plainText = sc.nextLine();
             System.out.println("Enter key :");
             key = sc.nextInt();
-            MC.encryption(plainText, key);
+            obj.encryption(plainText, key);
             break;
         case 2:
             System.out.println("Enter the cipher text : ");
             String cipher = sc.nextLine();
             System.out.println("Enter the key used in encryption process : ");
             key = sc.nextInt();
-            MC.decryption(cipher, key);
+            obj.decryption(cipher, key);
             break;
         default:
             System.out.println("Wrong choice");
