@@ -10,9 +10,11 @@ public class MultiplicativeSubstitutionCipher {
     }
 
     protected int multiplicativeInverse(int r1, int r2) {
-        int t1 = 0, t2 = 1, q = 0, r = 0, t;
+        int t1 = 0, t2 = 1, q = 0, r = 0, t = 0;
         int zn = r1;
+        System.out.println("\nq \t r1 \t r2 \t r \t t1 \t t2 \t t");
         while (r2 > 0) {
+            System.out.println(q + " \t " + r1 + " \t " + r2 + " \t " + r + " \t " + t1 + " \t " + t2 + " \t " + t);
             q = r1 / r2;
             r = r1 - q * r2;
             r1 = r2;
@@ -21,6 +23,7 @@ public class MultiplicativeSubstitutionCipher {
             t1 = t2;
             t2 = t;
         }
+        System.out.println(q + " \t " + r1 + " \t " + r2 + " \t " + r + " \t " + t1 + " \t " + t2 + " \t " + t);
         if (r1 == 1) {
             t = t1 > 0 ? t1 : zn + t1;
             return t;
