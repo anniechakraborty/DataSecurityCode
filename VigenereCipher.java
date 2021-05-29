@@ -46,10 +46,17 @@ public class VigenereCipher {
         System.out.println("The Plain text is : " + plainText);
         System.out.println("The Key phrase is : " + keytext);
 
+        System.out.println("\nPT ch\tNE PT\tKey Ch\tNE Key\tsum % 26\tCT ch");
         for (int i = 0; i < plainText.length(); i++) {
+            System.out.print(plainText.charAt(i));
             int numEq_PT = getPos(plainText.charAt(i));
+            System.out.print("\t" + numEq_PT);
+            System.out.print("\t" + keytext.charAt(i));
             int numEq_Key = getPos(keytext.charAt(i));
+            System.out.print("\t" + numEq_Key);
             int sum = (numEq_Key + numEq_PT) % 26;
+            System.out.print("\t" + sum);
+            System.out.println("\t\t" + getChar(sum));
             cipher += getChar(sum);
         }
         return cipher;
@@ -64,6 +71,6 @@ public class VigenereCipher {
         String key = sc.next();
         sc.close();
         String cipher = vig.encrypt(text, key);
-        System.out.println("The Cipher text is : " + cipher);
+        System.out.println("\nThe Cipher text is : " + cipher);
     }
 }

@@ -58,6 +58,11 @@ public class KeyedTranspositionCipher {
             sc.nextLine();
             System.out.println("Enter plain text : (no spaces)");
             String text = sc.next().toUpperCase();
+            // Adding dummy characters if text length isn't divisible by key array size
+            if (text.length() % size != 0) {
+                // number of dummy characters to be added
+                int num_dum = text.length() % size;
+            }
             obj.encrypt(text, keyEncrypt);
             break;
         case 2:
